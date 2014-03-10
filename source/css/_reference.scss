@@ -1,0 +1,225 @@
+// ----------------------------------------------------------------------------
+// General Ref Styles
+
+.module-icon {
+  @extend .media-object;
+  @extend .img-thumbnail;
+  width: 60px;
+}
+
+.sidebar .api .level-1 > li > a {
+  text-transform: none;
+}
+
+.reference {
+
+  .primitive, .array, .param-mode {
+    font-size: 93%;
+    font-family: $font-family-monospace;
+  }
+
+  td > p {
+    margin: 0;
+  }
+
+// ----------------------------------------------------------------------------
+// Type Metadata List
+
+  ul.meta {
+    list-style: none;
+    margin: 20px 0;
+    padding: 6px 12px;
+    border-left: 3px solid $gray-light;
+    background-color: #f8f8f8;
+    > li {
+      color: $gray;
+      margin: 6px;
+      font-size: 13px;
+    }
+  }
+
+// ----------------------------------------------------------------------------
+// Tag Lists
+
+  .tag-list {
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    li {
+      font-size: 12px;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 3px;      
+    }
+    a {
+      color: $gray;
+      padding: 0 5px 2px;
+      border-radius: 3px;
+      border: 1px solid $gray-light;
+      &:hover {
+        color: $gray-darker;
+        border-color: $gray-darker;
+        text-decoration: none;
+      }
+    }
+  }
+
+// ----------------------------------------------------------------------------
+// Hierarchy
+
+  .hierarchy {
+    ul {
+      list-style: none;
+      margin-left: 9px;
+      padding-left: 0;
+    }
+    ul ul { padding-left: 18px; }
+    ul ul > li:before {
+      position: relative;
+      top: -1px;
+      left: -18px;
+      margin-right: -15px;
+      width: 16px;
+      height: 18px;
+      content: '';
+      display: inline-block;
+      background: url(/img/level-down.svg) no-repeat 0 0;
+      background-size: 100%;
+      opacity: 0.18;
+    }
+    li > span {
+      > a { font-size: 16px; }
+      &:after { content: ' — '; }
+    }
+    ul.subtypes, .subtypes > li > span {
+      font-size: 14px;
+    }
+  }
+
+// ----------------------------------------------------------------------------
+// Member Documentation Panels
+
+  .member-list {
+    position: relative; // create frame for the inner elements
+  }
+
+  .member {
+    margin-top: -1px;
+    padding: 18px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    &:last-child { border-bottom-width: 2px; }
+
+    .proto {
+      @extend .mono;
+      font-size: 14px;
+      margin-bottom: 12px;
+      p { // hanging indent
+        padding-left: 5em;
+        text-indent: -5em;
+      }
+      .heading {
+        font-size: 16px;
+      }
+      .paren {
+        padding: 0 4px;
+        font-size: 15px;
+      }
+    }
+
+    &.collapsible .proto {
+      cursor: pointer;
+      &:before {
+        float: right;
+        font-family: 'FontAwesome';
+        content: '\f077';
+        color: $gray-lighter;
+      }
+      &.collapsed:before {
+        content: '\f078';
+        color: $gray-light;
+      }
+    }
+
+    .doc {
+      margin: 0 15px;
+      font-size: 15px;
+
+      p {
+        margin: 8px 0 0 0;
+        &.lead {
+          font-size: 16px;
+        }
+      }
+
+      code {
+        padding: 0;
+        border: none;
+        font-size: 14px;
+        color: $color-teal;
+        background-color: transparent;
+      }
+
+      ul.raises {
+        list-style: none;
+        margin: 9px 0 0 0;
+        padding: 0;
+        &:before {
+          @extend .mono;
+          content: 'raises';
+          color: $color-magenta;
+        }
+        > li {
+          margin: 3px 15px 3px 30px;
+        }
+      }
+
+    } // .doc
+
+  } // .member
+
+} // .ref
+
+// ----------------------------------------------------------------------------
+// TypeKind Labels
+
+.tk {
+  @extend .mono;
+  padding: 3px 0 2px 0;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+  width: 18px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.tk-component {
+  background-color: $color-fg;
+  &:after{ content: 'C'; }
+}
+
+.tk-enum {
+  background-color: $color-aqua;
+  &:after{ content: 'E'; }
+}
+
+.tk-exception {
+  background-color: $color-maroon;
+  &:after{ content: 'E'; }
+}
+
+.tk-interface {
+  background-color: $color-azure;
+  &:after{ content: 'I'; }
+}
+
+.tk-native-class {
+  background-color: $color-purple;
+  &:after{ content: 'N'; }
+}
+
+.tk-struct {
+  background-color: $color-yellow;
+  &:after{ content: 'S'; }
+}

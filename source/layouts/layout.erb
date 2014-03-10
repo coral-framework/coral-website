@@ -1,0 +1,65 @@
+<%
+
+content = capture do yield end
+
+content_for :sidenav do
+  # SITEMAP NAVIGATION
+  sidenav = ''
+  # start from the parent level, unless it's the site root
+  root = current_page
+  root = root.parent if root.parent.parent
+  level_pages = page_children(root)
+  unless level_pages.empty?
+    sidenav << '<ul class="nav level-1">'
+    sidenav << nav_link_page(root)
+    # current level pages
+    sidenav << %Q{<ul class="nav level-2">}
+    current_index = level_pages.index(current_page)
+    # current level pages before the current page
+    level_pages.each_with_index do |p, i|
+      break if i == current_index
+      sidenav << nav_link_page(p)
+    end
+    if current_index # i.e. unless the current_page is the root
+      # current page
+      sidenav << nav_link_page(current_page) do
+        children = page_children(current_page)
+        unless children.empty?
+          str = %Q{<ul class="nav level-3">}
+          children.each { |p| str << nav_link_page(p) }
+          str << '</ul>'
+        end
+      end
+      # current level pages after the current page
+      level_pages.slice( current_index + 1 .. -1 ).each do |p|
+        sidenav << nav_link_page(p)
+      end
+    end
+    sidenav << '</ul></ul>'
+  end
+
+  # CURRENT PAGE TOC
+  toc = extract_toc(content)
+  unless toc.empty?
+    sidenav << '<div id="toc"><ul class="nav level-1">'
+    sidenav << %Q{<li><a href="#_top"><i class="fa fa-fw fa-thumb-tack"></i> #{
+      page_short_title(current_page)}</a></li>}
+    sidenav << nav_toc(toc, 1)
+    sidenav << '</ul></div>'
+  end
+
+  sidenav
+end
+
+wrap_layout :sidebar do %>
+
+  <div class="page-header">
+    <h1><%= page_title(current_page) %><% if current_page.data.subtitle %>
+      <small><%= current_page.data.subtitle %></small><% end %></h1>
+  </div>
+
+  <%
+
+  concat content
+
+end %>

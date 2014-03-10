@@ -1,0 +1,19 @@
+---
+title: Modules
+---
+
+<%
+doc.modules.each do |module_name, m|
+  p = get_page(Coral::api_path module_name)
+%>
+<div class="media">
+  <a class="pull-left" href="<%= p.url %>">
+    <%= image_tag p.data.icon, class: 'module-icon' %>
+  </a>
+  <div class="media-body">
+    <h3 class="media-heading"><%= page_title(p) %>
+      <small><a href="<%= p.url %>"><%= module_name %></a></small></h3>
+    <%= page_summary(p) %>
+  </div>
+</div>
+<% end %>

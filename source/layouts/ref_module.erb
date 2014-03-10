@@ -1,0 +1,36 @@
+<%
+
+sidenav = capture do %>
+  <div id="toc" class="api">
+    <ul class="nav level-1">
+      <li><a href="#_top"><%= page_title(current_page) %></a></li>
+<%
+end
+
+content = capture do yield end
+toc = extract_toc(content)
+
+wrap_layout :sidebar do %>
+
+  <div class="page-header">
+    <h1><%= page_title(current_page) %> <small><%= m.name %></small></h1>
+  </div>
+
+  <%= content %>
+
+  <% # Append tags that the template did not mention
+  m.tags.each do |name, types|
+    next if toc[name]
+    toc[name] = [name.titleize, 2]
+  %>
+    <h2 id="<%= name %>"><%= name.titleize %></h2>
+    <%= partial :type_list, object: types %>
+  <% end %>
+
+  <%
+
+  sidenav << nav_toc(toc, 1)
+  sidenav << '</ul></div>'
+  content_for :sidenav do sidenav end
+
+end %>

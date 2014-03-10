@@ -1,0 +1,86 @@
+---
+title: Coral Module
+title_short: co
+icon: coral-icon.svg
+summary: Module that powers the Coral framework.
+---
+
+Module that powers the Coral framework.
+{: .lead}
+
+This module comprises Coral's three founding pillars:
+
+1. A service-oriented component model.
+2. A reflective type system.
+3. A module system.
+
+Below is a catalogue of all module types.
+
+
+# System <small>Coral's bootstrap interface and only singleton</small> {#system}
+{: .page-header}
+
+The framework initializes itself the first time you get the <%= doc_link 'co.ISystem' %> singleton.
+
+<%= partial :type_list, object: m.tags['system'] %>
+
+
+# Component Model <small>Coral's service-oriented component model</small> {#component-model}
+{: .page-header}
+
+A _component_ in Coral---like a _class_ in OOP---is a template for creating objects.
+An _object_ is a component _instance_ that provides and consumes services.
+A _service_ is the basic unit of functionality, and is provided through an _interface_.
+
+An interface is not only the protocol, but also the _contract_ for a service.
+Like an object is _an instance of_ a component, we can think of a service as _an instance of_ an interface.
+Ultimately, both components and interfaces are classes in C++.
+
+Components, besides having a static set of interfaces (at compile time),
+may provide additional services (at runtime) through _dynamic proxies_.
+
+<%= partial :type_list, object: m.tags['component-model'] %>
+
+
+# Type System <small>Coral's reflective type system</small> {#type-system}
+{: .page-header}
+
+Coral supports _type introspection_ and _reflection_ throughout the
+framework, based on the types in this section.
+
+<%= partial :type_list, object: m.tags['type-system'] %>
+
+
+## Creation <small>Type creation API</small> {#type-creation}
+
+<%= partial :type_list, object: m.tags['type-creation'] %>
+
+
+## Annotation <small>Type decoration system</small> {#type-annotation}
+
+<%= partial :type_list, object: m.tags['type-annotation'] %>
+
+
+## Introspection <small>Type introspection API</small> {#type-introspection}
+
+<%= partial :type_list, object: m.tags['type-introspection'] %>
+
+
+# Module System <small>Coral's module system</small> {#module-system}
+{: .page-header}
+
+<%= partial :type_list, object: m.tags['module-system'] %>
+
+
+# Exceptions {#exception}
+{: .page-header}
+
+<%= partial :type_list, object: m.tags['exception'] %>
+
+
+# Deprecated {#deprecated}
+{: .page-header}
+
+These types are marked as deprecated and will be removed in a future version.
+
+<%= partial :type_list, object: m.tags['deprecated'] %>

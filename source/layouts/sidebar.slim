@@ -1,0 +1,17 @@
+- wrap_layout :base
+  .container
+    .row
+      .col-md-3.hidden-print role="complementary"
+        .sidebar
+          = yield_content :sidenav
+      .col-md-9 role="main"
+        a#_top
+        ol.breadcrumb
+          li
+            a href="/"  Coral
+          - lineage = page_lineage(current_page)
+          - lineage.each_with_index do |p, i|
+            li
+              a href=p.url = page_title(p)
+          li.active= page_title(current_page)
+        == yield

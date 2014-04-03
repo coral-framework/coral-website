@@ -1,0 +1,7 @@
+table.type-list
+  - type_list.each do |t|
+    tr
+      td
+        i class="icon-tk-#{t.kind.delete ' '}" title=t.kind.titleize
+      td= doc_link t.name
+      td= cfm_to_html t.doc_caption

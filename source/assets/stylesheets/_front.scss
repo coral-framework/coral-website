@@ -1,0 +1,93 @@
+.header {
+  padding: 75px 15px;
+  position: relative;
+  text-align: center;
+
+  color: white;
+  @include background-image(linear-gradient(shade($color-coral, 9%), tint($color-coral, 15%)));
+
+  .coral-icon {
+    display: inline-block;
+    font-size: 106px;
+    line-height: 106px;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid $color-coral-lighter;
+    border-radius: 15%;
+  }
+
+  p.lead {
+    width: 66%;
+    margin: 30px auto;
+    font-size: 30px;
+  }
+
+  ul.feature-list {
+    @extend .list-inline;
+    font-size: 16px;
+    font-weight: 200;
+    li:before {
+      content: '\2713  ';
+    }
+  }
+
+  a.btn {
+    margin-top: 30px;
+    padding: 15px 30px;
+  }
+
+  p.version {
+    font-size: 14px;
+    margin-top: 18px;
+    color: $color-coral-light;
+  }
+}
+
+.featurette {
+  padding: 40px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  text-align: center;
+  background-color: #fff;
+  border-top: 1px solid darken($page-header-border-color, 5%);
+  .title {
+    color: #333;
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  h3 {
+    color: #333;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  .feature-icon {
+    color: $color-coral;
+    font-size: 90px;
+    line-height: 96px;
+  }
+}
+
+@media (min-width: 768px) {
+  .featurette {
+    padding: 90px 0;
+    .title {
+      font-size: 40px;
+    }
+    .lead {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 80%;
+    }
+  }
+}
+
+.featurette + .footer {
+  margin-top: 0;
+}
+
+.half-rule {
+  width: 120px;
+  margin: 40px auto;
+}

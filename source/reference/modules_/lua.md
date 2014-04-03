@@ -1,7 +1,7 @@
 ---
 title: Lua Module
-title_short: lua
-icon: lua-logo.svg
+title_short: Lua (lua)
+icon: lua
 ---
 
 Integrates the Lua scripting language into Coral.

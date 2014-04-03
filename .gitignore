@@ -1,3 +1,9 @@
+# Ignore the build dir
+/build
+
+# Ignore sass/sprockets cache
+/.cache
+
 # Ignore bundler config
 /.bundle
 

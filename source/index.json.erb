@@ -1,7 +1,7 @@
 <%
 
 def summarize(text)
-  truncate(doc_plain(text), :length => 50)
+  truncate(cfm_to_plaintext(text), :length => 60).rstrip
 end
 
 index = {}
@@ -11,28 +11,32 @@ module_list = []
 doc.modules.each do |module_name,m|
   type_list = []
   m.types.each do |t|
-    type_info = {kind: t.kind, name: t.name, desc: summarize(t.doc_caption)}
+    type_info = {tk: t.kind, name: t.name, desc: summarize(t.doc_caption)}
     type_info['members'] = [].tap do |list|
       t.members.each do |mem|
-        list << {kind: mem.kind, name: mem.name, desc: summarize(mem.doc_caption)}
+        list << {mk: mem.kind, name: mem.name, desc: summarize(mem.doc_caption)}
       end
     end if t.members
     type_list << type_info
   end
-  module_list << {name: module_name, types: type_list}
+  module_page = get_page(Coral::api_path(module_name))
+  module_list << {name: module_name, title: page_title(module_page),
+    desc: summarize(page_summary module_page), types: type_list}
 end
 index['modules'] = module_list
 
 # Pages
 page_list = []
 pages = sitemap.resources.select do |p|
-  p.ext == '.html' and not p.path.match(/reference\/modules/)
+  p.ext == '.html' and not p.path.start_with? Coral::API_BASE_PATH and not p.data.hidden
 end
 pages.each do |page|
-  page_info = {name: page.data.title, url: page.url}
-  page_info['sections'] = [].tap do |list|
-    page.data.sections.each{|i| list << {name: i[0], id: i[1]} }
-  end if page.data.sections
+  page_info = {title: page_title(page), desc: summarize(page_summary(page)), url: page.url}
+  sections = []
+  extract_toc(page_body page).each do |id, (title, level)|
+    sections << {title: title, id: id} if level == 2
+  end
+  page_info['sections'] = sections unless sections.empty?
   page_list << page_info
 end
 index['pages'] = page_list

@@ -19,8 +19,7 @@ Because we use [Pygments](http://pygments.org/) you'll also need Python and our 
 Contributing
 ------------
 
-Please help Coral improve its documentation. We'll merge in any reasonable extensions to our website docs, and give credit for your help!
-]Most articles are written in [Markdown](http://en.wikipedia.org/wiki/Markdown).
+Please help Coral improve its documentation. We'll merge in any reasonable extensions to our website docs, and give credit for your help! Most articles are written in [Markdown](http://en.wikipedia.org/wiki/Markdown).
 
 Copyright
 ---------

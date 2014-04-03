@@ -1,0 +1,85 @@
+---
+title: Coral Framework
+title_short: Coral
+layout: base
+---
+
+.header
+  .container role="main"
+    .coral-icon
+      i.icon-coral
+    p.lead Coral is a simple framework for service-oriented, component-based development in C++.
+    ul.feature-list
+      li Language
+      li Modules
+      li Reflection
+      li Scripting
+      li Tools
+      li Portable
+    a.btn.btn-lg.btn-outline-inverse href="/guides/getting-started#download"  Download Coral
+    p.version Currently #{data.coral.release}
+
+.featurette
+  .container
+    h2.title Design simple, extensible architectures.
+    p.lead Coral gives you simple modern tools to design better software. It makes large-scale C++ development faster and easier, and is ideal for soft real-time systems.
+    hr.half-rule
+    .row
+      .col-sm-4
+        i.feature-icon.icon-atom
+        h3 Reflective Types
+        markdown:
+          Coral has a language for specifying components and interfaces. All types compile to C++ and automatically support reflection.
+      .col-sm-4
+        i.feature-icon.icon-tk-component
+        h3 Lightweight Components
+        markdown:
+          A component is just a class. Coral uses a clean subset of C++ as its object model. Everything is as predictable and efficient as possible.
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Modules
+        markdown:
+          In Coral, modules are the unit of deployment and extension---a collection of types and resources that can be loaded as plug-ins.
+    hr.half-rule
+    .lead Coral is open source. It's developed and maintained on GitHub.
+    a.btn.btn-outline.btn-lg href="https://github.com/coral-framework/coral"
+      i.icon-github
+      |  View the project on GitHub
+
+/.featurette
+  .container
+    h2.title Features
+    p.lead Bla.
+    hr.half-rule
+    .row
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Simple Type System
+        markdown:
+          Scalars, arrays, enum, struct, native class, interface, exception, component, and a variant type.
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Native Classes
+        markdown:
+          A native class is a mechanism for wrapping an external C++ class as a value type. This mechanism allows domain-specific types, such as geometric algebra types for computer graphics, to be integrated into Coral without incurring the extra costs of a component.
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Service Platform
+        markdown:
+          A central database where services are published and queried.
+    .row
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Lua Integration
+        markdown:
+          A module that integrates Coral with Lua. Almost everything can be scripted in Lua, including components and modules.
+      .col-sm-4
+        i.feature-icon.icon-modules
+        h3 Memory Management
+        markdown:
+          Coral uses reference counting to manage memory in C++, so care must be taken to avoid reference cycles. However, Lua provides garbage collection and can be used without any worries.
+      .col-sm-4
+        i.feature-icon.icon-puzzle-piece
+        h3 Safety Checks
+        markdown:
+          Care must be taken to guarantee the binary compatibility of modules.

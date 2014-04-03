@@ -1,0 +1,211 @@
+/ Data
+ruby:
+  def members_of(type, kind)
+    (type.members or {}).select{|x| x.kind == kind }\
+  end
+  fields = members_of t, 'field'
+  methods = members_of t, 'method'
+  facets = members_of t, 'facet'
+  receptacles = members_of t, 'receptacle'
+
+/ Navigation
+- content_for :sidenav
+  #toc.api
+    ul.nav.level-1
+      li
+        a href="#_top" = t.name
+      ul.nav.level-2
+        - if t.kind == 'interface'
+          li
+            a href="#_hierarchy"
+              i.icon-hierarchy
+              |  Hierarchy
+        - unless fields.empty?
+          li
+            a href="#_fields"
+              i.icon-field
+              |  Fields
+            ul.nav.level-3
+              - fields.each do |field|
+                li
+                  a.mono href="##{field.name}"= field.name
+        - unless methods.empty?
+          li
+            a href="#_methods"
+              i.icon-method
+              |  Methods
+            ul.nav.level-3
+              - methods.each do |method|
+                li
+                  a.mono href="##{method.name}"= method.name
+        - unless t.cpp.blank?
+          li
+            a href="#_cpp"
+              i.icon-code
+              |  Embedded C++
+        - unless facets.empty?
+          li
+            a href="#_fields"
+              i.icon-facet
+              |  Facets
+            ul.nav.level-3
+              - facets.each do |p|
+                li
+                  a.mono href="##{p.name}"= p.name
+        - unless receptacles.empty?
+          li
+            a href="#_fields"
+              i.icon-receptacle
+            |  Receptacles
+            ul.nav.level-3
+        - if t.kind == 'enum'
+          li
+            a href="#_ids"
+              i.icon-enum
+              |  Identifiers
+
+/ Contents
+- wrap_layout :sidebar
+  .page-header
+    h1
+      = t.name
+      small= t.kind
+  .doc
+    = cfm_to_html "#{t.doc_caption}\n{:.lead}"
+    .hl
+      = cfm_to_html t.doc_body
+
+  /--- Meta -------------------------------------------------------------------
+  ul.meta
+    li
+      i.fa.fa-fw.fa-tags
+      strong Tags:
+      ul.tag-list
+        - t.tags.each do |name|
+          li
+            a href=("/#{Coral::api_path m.name}##{name}") = name.titleize
+    li
+      i.fa.fa-fw.fa-link
+      strong Referenced from #{pluralize(t.backrefs.size, 'type')}
+      - unless t.backrefs.empty?
+        | : #{t.backrefs.keys.map { |t| doc_link(t.name) }.join(", ")}
+      |.
+
+  /--- Hierarchy --------------------------------------------------------------
+  - if t.kind == 'interface'
+    h2#_hierarchy
+      i.icon-hierarchy
+      |  Hierarchy
+    .hierarchy
+      = partial :type_hierarchy, locals: { t: t, ancestors: ancestors_of(t) }
+
+  /--- Fields -----------------------------------------------------------------
+  - unless fields.empty?
+    h2#_fields
+      i.icon-field
+      |  Fields
+    .member-list
+      - fields.each do |field|
+        .member.hl id=field.name class="#{'collapsible' unless field.doc_body.blank?}"
+          - a = field.doc_body.blank? ? {} : {"data-toggle"=>"collapse", "data-target"=>"##{field.name}_rest"}
+          .proto *a
+            - if field.isReadOnly
+              span.k> readonly
+            => doc_link(field.type)
+            span.heading.nv => field.name
+          .doc
+            = cfm_to_html "#{field.doc_caption}\n{:.lead}"
+            - unless field.doc_body.blank?
+              .collapse.in id="#{field.name}_rest"= cfm_to_html field.doc_body
+
+  /--- Methods ----------------------------------------------------------------
+  - unless methods.empty?
+      h2#_methods
+        i.icon-method
+        |  Methods
+      .member-list
+        - methods.each do |method|
+          .member.hl id=method.name class="#{'collapsible' unless method.doc_body.blank?}"
+            - a = method.doc_body.blank? ? {} : {"data-toggle"=>"collapse", "data-target"=>"##{method.name}_rest"}
+            .proto *a
+              p
+                => doc_link(method.returnType)
+                span.heading.nf= method.name
+                span.paren
+                  | (
+                - method.parameters.each_with_index do |p,i|
+                  = i > 0 ? ', ' : ''
+                  span.k = p.mode
+                  | &nbsp;
+                  = doc_link(p.type)
+                  | &nbsp;
+                  span.nl = p.name
+                span.paren
+                  | )
+            .doc
+              = cfm_to_html "#{method.doc_caption}\n{:.lead}"
+              - raises = {}
+              - rest_html = cfm_to_html(Coral::format_raises(method.doc_body, raises))
+              - unless method.doc_body.blank?
+                .collapse.in id="#{method.name}_rest" = rest_html
+              - method.exceptions.each do |e|
+                - unless raises[e]
+                  p
+                    em
+                      | Raises undocumented exception #{doc_link e}.
+
+  /--- C++ Block --------------------------------------------------------------
+  - unless t.cpp.blank?
+      h2#_cpp
+        i.icon-code
+        |  Embedded C++
+      = Coral::highlight('cpp', t.cpp)
+
+  /--- Component Facets -------------------------------------------------------
+  - unless facets.empty?
+      h2#_facets
+        i.icon-facet
+        |  Facets
+      .member-list
+        - facets.each do |p|
+          .member.hl id=p.name class="#{'collapsible' unless p.doc_body.blank?}"
+            - a = p.doc_body.blank? ? {} : {"data-toggle"=>"collapse", "data-target"=>"##{p.name}_rest"}
+            .proto *a
+              => doc_link(p.type)
+              span.heading.nv= p.name
+            .doc
+              = cfm_to_html "#{p.doc_caption}\n{:.lead}"
+              - unless p.doc_body.blank?
+                .collapse.in id="#{p.name}_rest"= cfm_to_html p.doc_body
+
+  /--- Component Receptacles --------------------------------------------------
+    - unless receptacles.empty?
+      h2#_receptacles
+        i.icon-receptacle
+        |  Receptacles
+      .member-list
+        - consumes.each do |p|
+          div.member.hl id=p.name class="#{'collapsible' unless p.doc_body.blank?}"
+            - a = p.doc_body.blank? ? {} : {"data-toggle"=>"collapse", "data-target"=>"##{p.name}_rest"}
+            .proto *a
+              => doc_link(p.type)
+              span.heading.nv= p.name
+            .doc
+              = cfm_to_html "#{p.doc_caption}\n{:.lead}"
+              - unless p.doc_body.blank?
+                .collapse.in id="#{p.name}_rest"= cfm_to_html p.doc_body
+
+  /--- Enum Identifiers -------------------------------------------------------
+  - if t.kind == 'enum'
+    h2#_ids
+      i.fa.fa-fw.fa-bars
+      | Identifiers
+    table.table.table-striped.table-condensed.hl
+      - t.identifiers.each_with_index do |id, i|
+        tr id=id.id
+          td= i
+          td
+            span.code.no= id.id
+          td= cfm_to_html id.doc
+
+  - concat yield

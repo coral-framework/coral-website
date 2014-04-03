@@ -1,0 +1,19 @@
+/ expects t (type) and ancestors (list of type names) as locals
+- sup = ancestors.pop
+- if sup
+  ul
+    li
+      span= doc_link sup
+      = cfm_to_plaintext Coral::types[sup].doc_caption
+      = partial :type_hierarchy, locals: { t: t, ancestors: ancestors }
+- else
+  ul
+    li
+      span
+        strong= t.name
+      = cfm_to_plaintext t.doc_caption
+    - unless t.subtypes.blank?
+      ul.subtypes
+        li
+          = pluralize(t.subtypes.size, 'known subtype')
+          | : #{t.subtypes.map { |sub| doc_link(sub) }.join(", ")}.

@@ -1,9 +1,0 @@
-<table class="table table-striped table-condensed">
-<% type_list.each do |t| %>
-  <tr>
-    <td><div class="tk tk-<%= t.kind.gsub(' ', '-') %>" title="<%= t.kind.titleize %>"></div></td>
-    <td><%= doc_link t.name %></td>
-    <td><%= doc_render t.doc_caption %></td>
-  </tr>
-<% end %>
-</table>

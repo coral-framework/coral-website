@@ -1,9 +1,9 @@
 ---
 title: Guides
-icon: fa-book
+icon: book
 ---
 
-This section contains conceptual material, how-tos and examples.
+Conceptual material, how-tos and examples.
 {: .lead}
 
 See the _Reference_ section if you're looking for API and other reference documentation.

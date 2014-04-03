@@ -2,18 +2,18 @@
 title: Portability
 ---
 
-Coral is designed for _source-code portability_, meaning that modules can be built for different platforms from one code base. However, dynamic libraries are not _binary portable_ and must be re-compiled for each platform.
+Coral is designed for _source-code portability_, meaning that modules can be built for different platforms from one code base. However, dynamic libraries are not _binary portable_ and must be re-compiled for each platform and compiler.
 
-Because C++ _does not guarantee binary compatibility across compilers_, Coral will always check if a module was compiled by the same compiler used for the framework---one of several automatic safety checks for preventing obscure crashes due to binary incompatibility.
+Because C++ doesn't guarantee binary compatibility _across compilers_, Coral will always check, before loading a module, if it was compiled by the same compiler that compiled the framework. This is one of several automatic safety checks that prevent obscure crashes due to binary incompatibility.
 
 # Supported platforms {#supported}
 {: .page-header}
 
-| OS      | Architectures   | Compilers                |
-|---------|-----------------|--------------------------|
-| Linux   | x86_32, x86_64  | GCC 4.5 or later         |
-| OSX     | x86_64          | Clang 3.0 or later       |
-| Windows | x86_32, x86_64  | Visual C++ 2010 or later |
+|    OS   | Architectures  |        Compilers         |
+|---------|----------------|--------------------------|
+| Linux   | x86_32, x86_64 | GCC 4.5 or later         |
+| OSX     | x86_64         | Clang 3.0 or later       |
+| Windows | x86_32, x86_64 | Visual C++ 2010 or later |
 {: .table .table-striped }
 
 # Adding support for new platforms {#adding}

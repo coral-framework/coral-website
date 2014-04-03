@@ -1,6 +1,5 @@
 ---
 title: About
-icon: fa-info-circle
 ---
 
 Originally developed for use in a real-time 3D engine, Coral has evolved into a portable, lightweight, general-purpose C++ component framework.
@@ -24,6 +23,6 @@ We are always looking for ways to make Coral simpler and more powerful. In the f
 {: .page-header}
 
 <ul class="list-inline" style="text-align:center">
-  <li><a href="http://en.wikipedia.org/wiki/PUC-Rio" target="_blank"><img src="/img/puc-rio.jpg" style="width:100px; margin:15px 30px;"></a></li>
-  <li><a href="http://en.wikipedia.org/wiki/Petrobras" target="_blank"><img src="/img/petrobras.svg" style="width:300px; margin:45px 30px;"></a></li>
+  <li><a href="http://en.wikipedia.org/wiki/PUC-Rio" target="_blank"><img src="/assets/images/puc-rio.jpg" style="width:100px; margin:15px 30px;"></a></li>
+  <li><a href="http://en.wikipedia.org/wiki/Petrobras" target="_blank"><img src="/assets/images/petrobras.svg" style="width:300px; margin:45px 30px;"></a></li>
 </ul>

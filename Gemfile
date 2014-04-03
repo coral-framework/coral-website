@@ -11,6 +11,8 @@ gem "middleman-minify-html"
 gem "middleman-favicon-maker"
 
 # Other Dependencies:
+gem "slim"
+gem "fontcustom"
 gem "pygments.rb"
 gem "bootstrap-sass", require: false
 

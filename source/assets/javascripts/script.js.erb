@@ -1,0 +1,165 @@
+// Loads all Bootstrap javascripts
+//= require bootstrap/affix
+//= require bootstrap/collapse
+//= require bootstrap/dropdown
+//= require bootstrap/scrollspy
+//= require bootstrap/tooltip
+//= require bootstrap/transition
+//= require _anchorjump
+//= require _hotkeys
+//= require _typeahead
+
+String.prototype.toTitleCase = function () {
+  return this.replace(/\w\S*/g, function(txt){
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
+$(document).bind('keypress', 's', function(e) {
+  $(".searchbox").focus();
+  e.preventDefault();
+});
+
+$(document).ready(function() {
+  // enable dropdown menus
+  $('.dropdown-toggle').dropdown();
+
+  // enable tooltips for TypeKind labels
+  $('.tk').tooltip();
+
+  // enhanced anchor jumps
+  $('a[href^="#"]').anchorjump();
+  setTimeout(function() {
+    if(location.hash) $.anchorjump(location.hash);
+  }, 1);
+
+  var navbarHeight = $('.navbar').outerHeight();
+
+  // affix TOC
+  $('#toc').affix({
+    offset: {
+      top: function() {
+        return (this.top = $('#toc').offset().top - navbarHeight);
+      },
+      bottom: function () {
+        return (this.bottom = $('.footer').outerHeight(true))
+      }
+    }
+  })
+
+  // enable TOC scroll spy
+  $('body').scrollspy({ target: '#toc', offset: 120 });
+
+  // search suggestion engine
+  function extend(obj) { return $.extend({}, obj); }
+  var engine = new Bloodhound({
+    datumTokenizer: function(d) {
+      return d.tokens;
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 9,
+    prefetch: {
+      ttl: <%= development? ? 1 : 1000 * 60 * 5 %>, // in milliseconds
+      thumbprint: '<%= Time.now.utc.iso8601 %>',
+      url: '/index.json',
+      filter: function(index) {
+        var entries = []
+        // API
+        for( var i = 0; i < index.modules.length; ++i ) {
+          var module = extend( index.modules[i] );
+          module.tokens = module.title.split('.').concat(module.name);
+          module.url = '/reference/modules/' + module.name.replace(/\./g, '/');
+          entries.push(module);
+          for( var j = 0; j < module.types.length; ++j ) {
+            var t = extend( module.types[j] );
+            t.tokens = t.name.split('.').concat(t.name);
+            t.url = '/reference/modules/' + t.name.replace(/\./g, '/');
+            entries.push(t);
+            if( !t.members ) continue;
+            for( var k = 0; k < t.members.length; ++k ) {
+              var m = extend( t.members[k] );
+              m.type = t;
+              m.tokens = t.tokens.concat(m.name);
+              m.url = '/reference/modules/' + t.name.replace(/\./g, '/') + '#' + m.name;
+              entries.push(m);
+            }
+          }
+        }
+        // Pages
+        for( var i = 0; i < index.pages.length; ++i ) {
+          var p = extend( index.pages[i] );
+          p.tokens = p.title.split(' ');
+          entries.push(p);
+          if( !p.sections ) continue;
+          for( var j = 0; j < p.sections.length; ++j ) {
+            var s = extend( p.sections[j] );
+            s.page = p;
+            s.desc = '<i class="icon-page"></i>' + p.title;
+            s.tokens = p.tokens.concat( s.title.split(' ') );
+            s.url = p.url + '#' + s.id;
+            entries.push(s);
+          }
+        }
+        return entries
+      },
+    },
+  });
+  engine.initialize();
+
+  // search UI
+  function kindOf(d) {
+    if( d.mk ) return d.mk;
+    if( d.tk ) return d.tk;
+    if( d.types ) return 'module';
+    if( d.page ) return 'section';
+    return 'page';
+  }
+  function renderIcon(d) {
+    var i = 'page';
+    if( d.mk ) i = d.mk;
+    else if( d.tk ) i = 'tk-' + d.tk.replace(' ', '');
+    else if( d.types ) i = 'module';
+    else if( d.page ) i = 'section';
+    return '<i class="icon-' + i + '" title="' + (d.tk ? d.tk : i).toTitleCase() + '"></i>';
+  }
+  function renderName(d) {
+    if( d.mk ) // a member
+      return '<span class="mono">' + d.type.name + ' <span class="'
+        + ( d.mk == 'method' ? '<%= pygment_for "method" %>' : '<%= pygment_for "field" %>' )
+        + '">' + d.name + '</span></span>';
+    else if( d.tk ) // a type
+      return '<span class="mono <%= pygment_for "type" %>">' + d.name + '</span>';
+    else // a module or page or section
+      return '<span class="page">' + d.title + '</span>';
+  }
+  var selectedDatum = null;
+  $('.searchbox').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'coral',
+    displayKey: function(d) { // returns renderName(d) stripped of html
+      var div = document.createElement("div");
+      div.innerHTML = renderName(d);
+      return div.textContent || div.innerText || "";
+    },
+    source: engine.ttAdapter(),
+    templates: {
+      empty: '<div class="empty">no results match the current query</div>',
+      suggestion: function(d) {
+        return '<div class="icon">' + renderIcon(d) + '</div>'
+        + '<div class="body hl">' + renderName(d)
+        + ( d.desc ? '<p>' + d.desc + '</p>' : '' ) + '</div>';
+      }
+    }
+  }).on("typeahead:selected", function(e, d) {
+    window.location = d.url;
+  }).on("typeahead:autocompleted", function(e, d) {
+    selectedDatum = d;
+  }).bind('keydown', 'return', function(e) {
+    if(selectedDatum)
+      window.location = selectedDatum.url;
+  });
+
+});

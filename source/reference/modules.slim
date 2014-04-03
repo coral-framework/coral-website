@@ -1,0 +1,14 @@
+---
+title: Modules
+icon: modules
+---
+
+- doc.modules.each do |module_name, m|
+  - p = get_page(Coral::api_path module_name)
+  .module
+    a.pull-left.module-icon href=p.url = page_icon(p)
+    .media-body
+      h3.media-heading
+        => page_title(p)
+        small= module_name
+      = page_summary(p)

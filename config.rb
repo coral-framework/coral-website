@@ -4,21 +4,19 @@
 
 set :build_dir, 'build'
 set :data_dir, 'data'
-set :css_dir, 'css'
-set :sass_dir, 'css'
-set :fonts_dir, 'css/fonts'
-set :images_dir, 'img'
-set :js_dir, 'js'
+set :css_dir, 'assets/stylesheets'
+set :sass_dir, 'assets/stylesheets'
+set :fonts_dir, 'assets/fonts'
+set :images_dir, 'assets/images'
+set :js_dir, 'assets/javascripts'
 set :layouts_dir, 'layouts'
 set :partials_dir, 'layouts'
 
 set :strip_index_file, true
 set :trailing_slash, false
 
-set :markdown_engine, :kramdown
-set :markdown, auto_ids: false, header_offset: 1, enable_coderay: false
-
-ignore 'css/fonts/*'
+ignore 'assets/icons/*'
+ignore 'assets/fonts/bootstrap/*'
 
 # custom acronyms
 ActiveSupport::Inflector.inflections do |inflect|
@@ -27,26 +25,17 @@ ActiveSupport::Inflector.inflections do |inflect|
 end
 
 ###
-# Custom extensions
+# Extensions
 ###
 
-require 'middleman-coral'
+require 'compass'
+
+require 'coral'
 activate :coral_doc, modules: %w(co lua)
-activate :coral_highlighter
+activate :coral_markdown
 
-###
-# Compass
-###
-
-require 'bootstrap-sass'
-
-# Change Compass configuration
-compass_config do |config|
-#   config.output_style = :compact
-  config.http_path = "/"
-  config.images_dir = "img"
-  config.javascripts_dir = "js"
-end
+set :markdown, header_offset: 1
+set :markdown_engine, :coral
 
 ###
 # Helpers
@@ -68,7 +57,7 @@ helpers do
   # List of page ancestors from the first-level page (which is
   # directly under the root) down to the page's parent.
   def page_lineage(page)
-    lineage = [] 
+    lineage = []
     while page.parent.parent
       page = page.parent
       lineage << page
@@ -89,8 +78,13 @@ helpers do
   end
 
   # The short title of a page.
-  def page_short_title(page)
+  def page_title_short(page)
     page.data.title_short || page_title(page)
+  end
+
+  # The short title of a page.
+  def page_icon(page)
+    %Q{<i class="icon-#{page.data.icon || 'page'}"></i>}
   end
 
   # Page content in HTML (no layout)
@@ -111,12 +105,10 @@ helpers do
 
   # Formats a nav link to a page
   def nav_link_page(p, &block)
-    title = page_title(p)
-    title = %Q{<i class="fa fa-fw #{p.data.icon}"></i> #{title}} if p.data.icon
-    nav_link(p.url, title, &block)
+    nav_link(p.url, "#{page_icon(p)} #{page_title_short(p)}", &block)
   end
 
-  # Given HTML containing header tags with ids, returns a hash: id => [title, level]
+  # Scans header tags within an html string and returns a hash: id => [title, level]
   def extract_toc(content)
     toc = {}
     content.scan /^<h([1-6]) id="([^"]+)"[^>]*>([^<]+).*?<\/h\1>/ do |n, id, title|
@@ -148,7 +140,17 @@ end
 # Build-specific configuration
 configure :build do
   # Generate favicons
-  activate :favicon_maker
+  activate :favicon_maker, icons: {
+    "favicon_hires.png" => [
+      { icon: "apple-touch-icon-152x152-precomposed.png" },
+      { icon: "apple-touch-icon-114x114-precomposed.png" },
+      { icon: "apple-touch-icon-72x72-precomposed.png" },
+    ],
+    "favicon_lores.png" => [
+      { icon: "favicon.png", size: "64x64" },
+      { icon: "favicon.ico", size: "64x64,32x32,24x24,16x16" },
+    ]
+  }
 
   # Optimizations for deployment
   activate :minify_css
@@ -160,9 +162,6 @@ configure :build do
 
   # Use relative URLs
   activate :relative_assets
-
-  # Or use a different image path
-  # set :http_prefix, "/img/"
 end
 
 # Pretty URLs

@@ -1,0 +1,218 @@
+{
+  "checksum": {
+    "previous": "e902100c253013e20ba76d0668f37a2d9076ed4894c22c0dd7ca0d4b921a701e",
+    "current": "e902100c253013e20ba76d0668f37a2d9076ed4894c22c0dd7ca0d4b921a701e"
+  },
+  "fonts": [
+    "source/assets/fonts/icons.ttf",
+    "source/assets/fonts/icons.svg",
+    "source/assets/fonts/icons.woff",
+    "source/assets/fonts/icons.eot"
+  ],
+  "glyphs": {
+    "atom": {
+      "codepoint": 61762,
+      "source": "source/assets/icons/atom.svg"
+    },
+    "blueprint": {
+      "codepoint": 61699,
+      "source": "source/assets/icons/blueprint.svg"
+    },
+    "book": {
+      "codepoint": 61749,
+      "source": "source/assets/icons/book.svg"
+    },
+    "chevron-down": {
+      "codepoint": 61737,
+      "source": "source/assets/icons/chevron-down.svg"
+    },
+    "chevron-left": {
+      "codepoint": 61738,
+      "source": "source/assets/icons/chevron-left.svg"
+    },
+    "chevron-right": {
+      "codepoint": 61736,
+      "source": "source/assets/icons/chevron-right.svg"
+    },
+    "chevron-up": {
+      "codepoint": 61739,
+      "source": "source/assets/icons/chevron-up.svg"
+    },
+    "clock": {
+      "codepoint": 61759,
+      "source": "source/assets/icons/clock.svg"
+    },
+    "code": {
+      "codepoint": 61757,
+      "source": "source/assets/icons/code.svg"
+    },
+    "construction": {
+      "codepoint": 61721,
+      "source": "source/assets/icons/construction.svg"
+    },
+    "coral": {
+      "codepoint": 61696,
+      "source": "source/assets/icons/coral.svg"
+    },
+    "cpp": {
+      "codepoint": 61697,
+      "source": "source/assets/icons/cpp.svg"
+    },
+    "download": {
+      "codepoint": 61701,
+      "source": "source/assets/icons/download.svg"
+    },
+    "droplet": {
+      "codepoint": 61724,
+      "source": "source/assets/icons/droplet.svg"
+    },
+    "enter": {
+      "codepoint": 61702,
+      "source": "source/assets/icons/enter.svg"
+    },
+    "facet": {
+      "codepoint": 61704,
+      "source": "source/assets/icons/facet.svg"
+    },
+    "field": {
+      "codepoint": 61751,
+      "source": "source/assets/icons/field.svg"
+    },
+    "gears": {
+      "codepoint": 61750,
+      "source": "source/assets/icons/gears.svg"
+    },
+    "github": {
+      "codepoint": 61706,
+      "source": "source/assets/icons/github.svg"
+    },
+    "hierarchy": {
+      "codepoint": 61707,
+      "source": "source/assets/icons/hierarchy.svg"
+    },
+    "home": {
+      "codepoint": 61758,
+      "source": "source/assets/icons/home.svg"
+    },
+    "level-down": {
+      "codepoint": 61755,
+      "source": "source/assets/icons/level-down.svg"
+    },
+    "link": {
+      "codepoint": 61708,
+      "source": "source/assets/icons/link.svg"
+    },
+    "location": {
+      "codepoint": 61761,
+      "source": "source/assets/icons/location.svg"
+    },
+    "lua": {
+      "codepoint": 61698,
+      "source": "source/assets/icons/lua.svg"
+    },
+    "method": {
+      "codepoint": 61752,
+      "source": "source/assets/icons/method.svg"
+    },
+    "module": {
+      "codepoint": 61753,
+      "source": "source/assets/icons/module.svg"
+    },
+    "modules": {
+      "codepoint": 61754,
+      "source": "source/assets/icons/modules.svg"
+    },
+    "page": {
+      "codepoint": 61710,
+      "source": "source/assets/icons/page.svg"
+    },
+    "puzzle-piece": {
+      "codepoint": 61766,
+      "source": "source/assets/icons/puzzle-piece.svg"
+    },
+    "receptacle": {
+      "codepoint": 61712,
+      "source": "source/assets/icons/receptacle.svg"
+    },
+    "script": {
+      "codepoint": 61714,
+      "source": "source/assets/icons/script.svg"
+    },
+    "search": {
+      "codepoint": 61715,
+      "source": "source/assets/icons/search.svg"
+    },
+    "section": {
+      "codepoint": 61716,
+      "source": "source/assets/icons/section.svg"
+    },
+    "speed": {
+      "codepoint": 61764,
+      "source": "source/assets/icons/speed.svg"
+    },
+    "tags": {
+      "codepoint": 61717,
+      "source": "source/assets/icons/tags.svg"
+    },
+    "tk-component": {
+      "codepoint": 61734,
+      "source": "source/assets/icons/tk-component.svg"
+    },
+    "tk-enum": {
+      "codepoint": 61728,
+      "source": "source/assets/icons/tk-enum.svg"
+    },
+    "tk-exception": {
+      "codepoint": 61735,
+      "source": "source/assets/icons/tk-exception.svg"
+    },
+    "tk-interface": {
+      "codepoint": 61729,
+      "source": "source/assets/icons/tk-interface.svg"
+    },
+    "tk-nativeclass": {
+      "codepoint": 61730,
+      "source": "source/assets/icons/tk-nativeclass.svg"
+    },
+    "tk-struct": {
+      "codepoint": 61731,
+      "source": "source/assets/icons/tk-struct.svg"
+    },
+    "users": {
+      "codepoint": 61718,
+      "source": "source/assets/icons/users.svg"
+    },
+    "yingyang": {
+      "codepoint": 61765,
+      "source": "source/assets/icons/yingyang.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": "fontcustom.yml",
+    "css_selector": ".icon-{{glyph}}",
+    "debug": false,
+    "font_name": "icons",
+    "force": false,
+    "input": {
+      "templates": "source/assets/icons",
+      "vectors": "source/assets/icons"
+    },
+    "no_hash": true,
+    "output": {
+      "css": "source/assets/stylesheets",
+      "fonts": "source/assets/fonts",
+      "preview": "source/assets/icons"
+    },
+    "preprocessor_path": "/assets/fonts/",
+    "quiet": false,
+    "templates": [
+      "scss",
+      "preview"
+    ]
+  },
+  "templates": [
+    "source/assets/stylesheets/_icons.scss",
+    "source/assets/icons/icons-preview.html"
+  ]
+}
